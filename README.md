@@ -6,6 +6,3 @@ Created by Caleb Han on 12/14/2022 (last updated 12/14/2022)
 
 ## Functions
 
-## Versions
-0.0.1 - initial build
-0.0.2 - renamed files + cleanup
