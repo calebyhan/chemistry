@@ -14,3 +14,12 @@
 0.1.2 - circular import issue
 0.1.3 - circular import issue
 0.1.4 - fixed circular import issue
+0.1.5 - added functions to periodic and conversions
+0.1.6 - added MANIFEST to package other files too
+0.1.7 - moved periodic.json to root
+0.1.8 - added __init__ to src
+0.1.9 - moved periodic.py to chemistry
+0.1.10 - moved periodic.json to chemistry
+0.1.11 - tested new file opener for JSON
+0.1.12 - implemented file opener for JSON
+0.2.0 - basics of periodic.py done
