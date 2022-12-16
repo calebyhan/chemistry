@@ -23,3 +23,4 @@
 0.1.11 - tested new file opener for JSON
 0.1.12 - implemented file opener for JSON
 0.2.0 - basics of periodic.py done
+0.2.1 - added descriptions to functions and added to forumlas.py
