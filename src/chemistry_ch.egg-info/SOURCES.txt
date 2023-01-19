@@ -1,0 +1,14 @@
+LICENSE
+MANIFEST.in
+README.md
+setup.py
+versions.md
+src/chemistry/__init__.py
+src/chemistry/conversions.py
+src/chemistry/formulas.py
+src/chemistry/periodic.json
+src/chemistry/periodic.py
+src/chemistry_ch.egg-info/PKG-INFO
+src/chemistry_ch.egg-info/SOURCES.txt
+src/chemistry_ch.egg-info/dependency_links.txt
+src/chemistry_ch.egg-info/top_level.txt

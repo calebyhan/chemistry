@@ -10,7 +10,7 @@ with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="chemistry_ch",
-    version="0.2.1",
+    version="0.2.4",
     description="Python library for chemistry equations and formulas.",
     long_description=long_description,
     long_description_content_type="text/markdown",

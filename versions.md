@@ -23,4 +23,7 @@
 0.1.11 - tested new file opener for JSON
 0.1.12 - implemented file opener for JSON
 0.2.0 - basics of periodic.py done
-0.2.1 - added descriptions to functions and added to forumlas.py
+0.2.1 - added descriptions to functions and added to formulas.py
+0.2.2 - added to period.py and fixed output type
+0.2.3 - edited README and added to periodic
+0.2.4 - added periodic.molar_mass

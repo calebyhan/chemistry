@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import re
 
 def name(ele):
     """
@@ -12,7 +13,9 @@ def name(ele):
             data = json.load(f)
         return data[ele - 1]["name"]
     elif type(ele) is str:
-        data = json.load(open('periodic.json'))
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
         for i in data:
             if i["symbol"].lower() == ele.lower():
                 return i["name"]
@@ -31,7 +34,7 @@ def number(ele):
             data = json.load(f)
         for i in data:
             if i["symbol"].lower() == ele.lower():
-                return i["atomicNumber"]
+                return int(i["atomicNumber"])
         raise Exception("Inputted value is not an atomic number or symbol.")
     else:
         raise Exception("Inputted value is not an atomic symbol.")
@@ -61,14 +64,14 @@ def mass(ele):
         folder = Path(__file__).parent
         with (folder / 'periodic.json').open('r') as f:
             data = json.load(f)
-        return data[ele - 1]["mass"][:-3]
+        return float(data[ele - 1]["atomicMass"].split("(")[0])
     elif type(ele) is str:
         folder = Path(__file__).parent
         with (folder / 'periodic.json').open('r') as f:
             data = json.load(f)
         for i in data:
             if i["symbol"].lower() == ele.lower():
-                return i["atomicMass"][:-3]
+                return float(i["atomicMass"].split("(")[0])
         raise Exception("Inputted value is not an atomic number or symbol.")
     else:
         raise Exception("Inputted value is not an atomic number or symbol.")
@@ -166,14 +169,20 @@ def ionRadius(ele):
         folder = Path(__file__).parent
         with (folder / 'periodic.json').open('r') as f:
             data = json.load(f)
-        return data[ele - 1]["ionRadius"]
+        if data[ele - 1]["ionRadius"] == "unknown":
+            return data[ele - 1]["ionRadius"]
+        else:
+            return int(data[ele - 1]["ionRadius"].split("(")[0])
     elif type(ele) is str:
         folder = Path(__file__).parent
         with (folder / 'periodic.json').open('r') as f:
             data = json.load(f)
         for i in data:
             if i["symbol"].lower() == ele.lower():
-                return i["ionRadius"]
+                if i["ionRadius"] == "unknown":
+                    return i["ionRadius"]
+                else:
+                    return int(i["ionRadius"].split("(")[0])
         raise Exception("Inputted value is not an atomic number or symbol.")
     else:
         raise Exception("Inputted value is not an atomic number or symbol.")
@@ -303,3 +312,130 @@ def block(ele):
         raise Exception("Inputted value is not an atomic number or symbol.")
     else:
         raise Exception("Inputted value is not an atomic number or symbol.")
+
+def year(ele):
+    """
+    Inputs either an atomic number or symbol to fetch the year discovered.
+    """
+
+    if type(ele) is int:
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
+        return data[ele - 1]["yearDiscovered"]
+    elif type(ele) is str:
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
+        for i in data:
+            if i["symbol"].lower() == ele.lower():
+                return i["yearDiscovered"]
+        raise Exception("Inputted value is not an atomic number or symbol.")
+    else:
+        raise Exception("Inputted value is not an atomic number or symbol.")
+
+def groupBlock(ele):
+    """
+    Inputs either an atomic number or symbol to fetch the type of element by group.
+    """
+
+    if type(ele) is int:
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
+        return data[ele - 1]["groupBlock"]
+    elif type(ele) is str:
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
+        for i in data:
+            if i["symbol"].lower() == ele.lower():
+                return i["groupBlock"]
+        raise Exception("Inputted value is not an atomic number or symbol.")
+    else:
+        raise Exception("Inputted value is not an atomic number or symbol.")
+
+def oxidationStates(ele):
+    """
+    Inputs either an atomic number or symbol to fetch the type of element by group.
+    """
+
+    if type(ele) is int:
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
+        if data[ele - 1]["oxidationStates"] == "unknown":
+            return data[ele - 1]["oxidationStates"]
+        else:
+            return list(map(int, data[ele - 1]["oxidationStates"].split(", ")))
+    elif type(ele) is str:
+        folder = Path(__file__).parent
+        with (folder / 'periodic.json').open('r') as f:
+            data = json.load(f)
+        for i in data:
+            if i["symbol"].lower() == ele.lower():
+                if i["groupBlock"] == "unknown":
+                    return i["oxidationStates"]
+                else:
+                    return list(map(int, i["oxidationStates"].split(", ")))
+        raise Exception("Inputted value is not an atomic number or symbol.")
+    else:
+        raise Exception("Inputted value is not an atomic number or symbol.")
+
+def molar_mass(molecule):
+    """
+    Inputs a molecule in type string and returns molar mass of that molecule.
+    """
+
+    atoms = []
+    current_atom = ""
+    current_sub = ""
+    for i in range(len(molecule)):
+        try:
+            int(molecule[i])
+            if current_atom != "":
+                atoms.append(current_atom)
+                current_atom = ""
+            current_sub += str(molecule[i])
+            if len(molecule) - 1 != i:
+                try:
+                    int(molecule[i + 1])
+                    pass
+                except:
+                    atoms.append(current_sub)
+                    current_sub = ""
+        except:
+            try:
+                str(molecule[i])
+                if molecule[i].isupper() == True and current_atom == "":
+                    current_atom += molecule[i]
+                elif molecule[i].islower() == True:
+                    current_atom += molecule[i]
+                elif molecule[i].isupper() == True and current_atom != "":
+                    atoms.append(current_atom)
+                    current_atom = molecule[i]
+            except:
+                raise Exception("Invalid input. Molecule should only contain letters and numbers.")
+
+    if current_atom != "":
+        atoms.append(current_atom)
+    if current_sub != "":
+        atoms.append(current_sub)
+    
+    sum = 0
+    cur_atom = ""
+    for i in range(len(atoms)):
+        try:
+            int(atoms[i])
+            sum += mass(cur_atom) * int(atoms[i])
+            cur_atom = ""
+        except:
+            if len(atoms) - 1 != i:
+                if cur_atom != "":
+                    sum += mass(cur_atom)
+                cur_atom = atoms[i]
+            else:
+                if cur_atom != "":
+                    sum += mass(cur_atom)
+                sum += mass(atoms[i])
+    return sum
