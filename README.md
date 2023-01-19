@@ -9,7 +9,7 @@ Python library for chemistry equations and formulas.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install chemistry-ch.
 
 ```bash
-pip install foobar
+pip install chemistry-ch
 ```
 
 ## Usage
@@ -30,6 +30,7 @@ chemistry.Formulas(moles=1, volume=1)
 
 ## Documentation
 
+https://chemistry-ch.readthedocs.io/en/latest/
 
 ## Contributing
 
