@@ -27,3 +27,4 @@
 0.2.2 - added to period.py and fixed output type
 0.2.3 - edited README and added to periodic
 0.2.4 - added periodic.molar_mass
+0.2.5 - added constants
